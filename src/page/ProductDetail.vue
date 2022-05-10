@@ -5,13 +5,13 @@
       <div class="grid lg:grid-cols-7 grid-cols-1 gap-4 space-x-5">
         <div class="grid grid-cols-2 col-span-3 gap-4 space-x-5">
           <div class="col-span-5">
-            <img class="w-full h-96 object-cover" :src="productImg" alt="">
+            <img class="w-full h-96 object-cover" :src="productDetailData.image" alt="">
           </div>
-          <div class="flex " v-for="(imgProductDetailDataItem,productDetailDataIndex) in productDetailData.images"
+          <!-- <div class="flex " v-for="(imgProductDetailDataItem,productDetailDataIndex) in productDetailData.images"
                :key="productDetailDataIndex">
             <img class="w-20" :src="imgProductDetailDataItem.full_image_path" alt="Nike Jordan 3-image-6"
                  @click="handleProductImg(imgProductDetailDataItem.full_image_path)"/>
-          </div>
+          </div> -->
         </div>
 
         <div class="col-span-4 space-y-7">
@@ -34,9 +34,9 @@
       </div>
       <div class="my-20">
         <h6 class="font-bold text-2xl">Mô tả sản phẩm</h6>
-        <p>{{ productDetailData.short_desc }}</p>
+        <p>{{ productDetailData.description }}</p>
       </div>
-      <div>
+      <!-- <div>
         <h6 class="font-bold text-2xl">Có thể bạn sẽ thích</h6>
         <div class=" grid lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 mt-5">
           <div class="productItem w-auto h-auto shadow-lg shadow-black-500/50 relative"
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -74,11 +74,8 @@ export default {
     async getData() {
       try {
         const resp = await productDetailService.getProductDetail(this.productId);
-        this.productDetailData = resp.data.product;
-        this.mightYouLikeProductsData = resp.data.mightYouLikeProducts;
-        this.productImg = this.productDetailData.images[0].full_image_path;
+        this.productDetailData = resp.data.data;
         console.log(this.productDetailData);
-        console.log(this.productImg);
         setTimeout(()=>{
           window.scroll(0,0)
         },500)

@@ -18,9 +18,9 @@
                  v-for="(itemCart, itemCartIndex) in cart"
                  :key="itemCartIndex">
               <div class="md:w-4/12 2xl:w-1/4 w-full">
-                <img :src="itemCart.image.full_image_path" alt="Black Leather Bag"
+                <img :src="itemCart.image" alt="Black Leather Bag"
                      class="h-full object-center object-cover md:block hidden"/>
-                <img :src="itemCart.image.full_image_path" alt="Black Leather Bag"
+                <img :src="itemCart.image" alt="Black Leather Bag"
                      class="md:hidden w-full h-full object-center object-cover"/>
               </div>
               <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
@@ -39,7 +39,7 @@
                   <p class="text-xs leading-3 underline text-red-500 cursor-pointer"
                      @click="removeItemCart(itemCart.id)">Remove</p>
                   <p class="text-base font-black leading-none text-gray-800 dark:text-black">
-                    {{ itemCart.price * itemCart.quantity }}</p>
+                    ${{ itemCart.price * itemCart.quantity }}.00</p>
                 </div>
               </div>
             </div>
@@ -70,6 +70,7 @@ export default {
     if (localStorage.getItem("carts")) {
       this.cart = JSON.parse(localStorage.getItem("carts"))
     }
+    console.log(this.cart);
   },
   methods: {
 
@@ -82,6 +83,7 @@ export default {
     updateQuantity(itemCartIndex, quantityUnit) {
       if (this.cart[itemCartIndex].quantity + quantityUnit <= 0) {
         this.cart.splice(itemCartIndex, 1);
+        localStorage.setItem("carts", JSON.stringify(this.cart))
       } else {
         this.cart[itemCartIndex].quantity += quantityUnit;
         localStorage.setItem('carts', JSON.stringify(this.cart));

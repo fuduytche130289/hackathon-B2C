@@ -1,7 +1,7 @@
 import {Axios} from "./Axios";
 
 export function getProductDetail(id) {
-    return Axios.get("products/" + id);
+    return Axios.get("product/" + id);
 }
 
 
