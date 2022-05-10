@@ -46,7 +46,7 @@
             <!--End card item-->
           </div>
         </div>
-        <div class="flex items-center lg:flex-row flex-col justify-center">
+        <div class="flex items-center lg:flex-row flex-col justify-center" v-if="this.flag === true">
           <router-link :to="{name:'order'}">
             <button
                 class="text-base leading-none w-96 my-5 py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700">
@@ -64,13 +64,17 @@ export default {
   data() {
     return {
       cart: [],
+      flag:false,
     }
   },
   mounted() {
     if (localStorage.getItem("carts")) {
       this.cart = JSON.parse(localStorage.getItem("carts"))
     }
-    console.log(this.cart);
+    if(this.cart.length > 0) {
+      this.flag = true;
+    }
+    console.log(this.flag);
   },
   methods: {
 
@@ -83,7 +87,10 @@ export default {
     updateQuantity(itemCartIndex, quantityUnit) {
       if (this.cart[itemCartIndex].quantity + quantityUnit <= 0) {
         this.cart.splice(itemCartIndex, 1);
-        localStorage.setItem("carts", JSON.stringify(this.cart))
+        localStorage.setItem("carts", JSON.stringify(this.cart));
+        if(this.cart.length == 0) {
+          this.flag = false;
+        }
       } else {
         this.cart[itemCartIndex].quantity += quantityUnit;
         localStorage.setItem('carts', JSON.stringify(this.cart));
